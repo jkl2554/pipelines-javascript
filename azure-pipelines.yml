@@ -17,10 +17,12 @@ steps:
 
 - script: |
     npm install --only=dev
-    #npm run build
+    npm run build
+  displayName: 'npm install & build'
+- script: 
     npx mocha
+  displayName: 'mocha'
 
-  displayName: 'npm install and build'
 
 - script: npm run compile
   displayName: 'npm run compile'

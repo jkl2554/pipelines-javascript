@@ -7,15 +7,72 @@ trigger:
 - master
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: 'ubuntu-latest'    # examples of other options: 'macOS-10.13', 'vs2017-win2016', 'ubuntu-16.04'
 
 steps:
 - task: NodeTool@0
   inputs:
-    versionSpec: '10.x'
+    versionSpec: '10.x'  # replace this value with the version that you need for your project
   displayName: 'Install Node.js'
 
 - script: |
-    npm install
-    npm run build
+    npm install --only=dev
+    #npm run build
+    npx mocha
+
   displayName: 'npm install and build'
+
+- script: npm run compile
+  displayName: 'npm run compile'
+
+- script : tsc --target ES6 --strict true --project tsconfigs/production.json
+  displayName: tsc --target ES6 --strict true --project tsconfigs/production.json
+
+- script: mocha test --reporter mocha-junit-reporter
+  displayName: mocha test --reporter mocha-junit-reporter
+
+- script: npm test
+  displayName: npm test
+
+
+- task: PublishTestResults@2
+  condition: succeededOrFailed()
+  inputs:
+    testRunner: JUnit
+    testResultsFiles: '**/TEST-RESULTS.xml'
+
+- task: PublishCodeCoverageResults@1
+  inputs: 
+    codeCoverageTool: Cobertura
+    summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/*coverage.xml'
+    reportDirectory: '$(System.DefaultWorkingDirectory)/**/coverage'
+
+- script: |
+    npm install -g @angular/cli
+    npm install
+    ng build --prod
+
+
+- script: gulp                       # include any additional options that are needed
+  displayName: gulp
+
+- task: PublishCodeCoverageResults@1
+  inputs: 
+    codeCoverageTool: Cobertura
+    summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/*coverage.xml'
+    reportDirectory: '$(System.DefaultWorkingDirectory)/**/coverage'
+
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(System.DefaultWorkingDirectory)'
+
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(System.DefaultWorkingDirectory)'
+    Contents: |
+      **\*.js
+      package.json
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+- task: PublishBuildArtifacts@1

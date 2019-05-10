@@ -43,6 +43,6 @@ steps:
     pathtoPublish: $(Build.ArtifactStagingDirectory)
     artifactName: MyBuildOutputs
     publishLocation: filePath
-    targetPath: $(Build.ArtifactStagingDirectory)/test/
+    targetPath: $(Pipeline.Workspace)/build/
     #parallel: false # Optional
     #parallelCount: # Optional

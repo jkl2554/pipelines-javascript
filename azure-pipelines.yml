@@ -33,16 +33,13 @@ steps:
 - task: CopyFiles@2
   inputs:
     SourceFolder: '$(System.DefaultWorkingDirectory)'
-    Contents: |
-      *.js
-      package.json
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
 - task: PublishBuildArtifacts@1
   inputs:
     pathtoPublish: $(Build.ArtifactStagingDirectory)
-    artifactName: MyBuildOutputs
-    publishLocation: filePath
-    targetPath: $(Pipeline.Workspace)/build/
+    artifactName: Build
+#    publishLocation: filePath
+#    targetPath: $(Pipeline.Workspace)/build/
     #parallel: false # Optional
     #parallelCount: # Optional

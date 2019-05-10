@@ -16,7 +16,7 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
-    npm install #--only=dev
+    npm install
     npm run compile
     tsc --target ES6 --strict true --project tsconfigs/production.json
     npm run build

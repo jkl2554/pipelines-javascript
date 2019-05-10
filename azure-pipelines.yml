@@ -42,3 +42,7 @@ steps:
   inputs:
     pathtoPublish: $(Build.ArtifactStagingDirectory)
     artifactName: MyBuildOutputs
+    publishLocation: filePath
+    targetPath: $(Build.ArtifactStagingDirectory)/test/
+    #parallel: false # Optional
+    #parallelCount: # Optional

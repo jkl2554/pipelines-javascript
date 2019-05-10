@@ -22,9 +22,9 @@ steps:
     npm run build
   displayName: 'npm install & build'
 
-# include any additional options that are needed
-
-- script: gulp
+- script: 
+    npm install -g gulp
+    gulp                    # include any additional options that are needed
   displayName: 'gulp start'
 
 

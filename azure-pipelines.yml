@@ -38,4 +38,4 @@ steps:
       package.json
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
-- task: PublishBuildArtifacts@1
+- task: PublishBuildArtifacts@3

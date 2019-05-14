@@ -6,7 +6,8 @@
 trigger:
 - master
 
-pool: Default
+pool:
+  name: Default
 #  vmImage: 'ubuntu-latest'    # examples of other options: 'macOS-10.13', 'vs2017-win2016', 'ubuntu-16.04'
 
 steps:
